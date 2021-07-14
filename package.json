@@ -6,7 +6,8 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"test": "uvu"
+		"test": "uvu",
+		"prepublish": "npm test"
 	},
 	"exports": {
 		".": "./index.js",

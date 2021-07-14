@@ -1,0 +1,23 @@
+{
+	"name": "svelte-undo",
+	"description": "A small utility for managing an undo stack",
+	"version": "1.0.0",
+	"author": "Rich Harris",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"test": "uvu"
+	},
+	"exports": {
+		".": "./index.js",
+		"./package.json": "./package.json"
+	},
+	"peerDependencies": {
+		"svelte": "^3"
+	},
+	"devDependencies": {
+		"prettier": "^2.3.2",
+		"svelte": "^3",
+		"uvu": "^0.5.1"
+	}
+}

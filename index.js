@@ -2,12 +2,7 @@ import { writable } from 'svelte/store';
 
 /**
  * @template T
- * @param {T} value
- * @returns {import('svelte/store').Readable<{ first: boolean, last: boolean, current: T }> & {
- *   push: (value: T) => T;
- *   undo: () => T;
- *   redo: () => T;
- * }}
+ * @param {T} current
  */
 export function createStack(current) {
 	/** @type {T[]} */
@@ -34,9 +29,11 @@ export function createStack(current) {
 	}
 
 	return {
+		/** @param {T | ((current: T) => T)} value */
 		push: (value) => {
 			stack.length = index;
-			stack[index++] = value;
+			stack[index++] =
+				typeof value === 'function' ? /** @type {(current: T) => T} */ (value)(current) : value;
 
 			return update();
 		},

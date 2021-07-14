@@ -14,11 +14,14 @@ test('goes back and forward through history state', () => {
 	const stack = createStack({ x: 1 });
 	stack.push({ x: 2 });
 	stack.push({ x: 3 });
+	stack.push((value) => ({ x: value.x + 1 }));
 
+	assert.equal(stack.undo(), { x: 3 });
 	assert.equal(stack.undo(), { x: 2 });
 	assert.equal(stack.undo(), { x: 1 });
 	assert.equal(stack.redo(), { x: 2 });
 	assert.equal(stack.redo(), { x: 3 });
+	assert.equal(stack.redo(), { x: 4 });
 });
 
 test('clears later values when pushing', () => {

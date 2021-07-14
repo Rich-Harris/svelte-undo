@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"checkJs": true,
+		"noImplicitAny": true,
+		"baseUrl": ".",
+		"moduleResolution": "node",
+		"target": "es2020"
+	},
+	"include": ["index.js", "test/*.js"]
+}

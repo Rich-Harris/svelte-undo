@@ -18,7 +18,7 @@ const stack = createStack(value);
 console.log((value = stack.undo())); // { answer: 42 }
 console.log((value = stack.redo())); // { answer: 42 }
 
-// stack.push returns the pushed value
+// stack.push returns the new value
 value = stack.push({ answer: 43 });
 value = stack.push({ answer: 44 });
 value = stack.push({ answer: 45 });
@@ -35,9 +35,14 @@ console.log((value = stack.redo())); // { answer: 43 }
 // pushing clears anything 'forward' in the stack
 value = stack.push({ answer: 99 });
 
+// you can also pass a function to `push`
+value = stack.push((value) => ({ answer: value.answer + 1 }));
+
+console.log((value = stack.undo())); // { answer: 99 }
 console.log((value = stack.undo())); // { answer: 43 }
 console.log((value = stack.redo())); // { answer: 99 }
-console.log((value = stack.redo())); // { answer: 99 }
+console.log((value = stack.redo())); // { answer: 100 }
+console.log((value = stack.redo())); // { answer: 100 }
 
 // you can subscribe to the state of the undo stack
 const unsubscribe = stack.subscribe(($stack) => {

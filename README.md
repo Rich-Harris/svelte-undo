@@ -40,9 +40,10 @@ console.log((value = stack.redo())); // { answer: 99 }
 console.log((value = stack.redo())); // { answer: 99 }
 
 // you can subscribe to the state of the undo stack
-const unsubscribe = stack.subscribe((state) => {
-	console.log(state.first); // false
-	console.log(state.last); // true — we're currently at the end of the stack
+const unsubscribe = stack.subscribe(($stack) => {
+	console.log($stack.first); // false
+	console.log($stack.last); // true — we're currently at the end of the stack
+	console.log($stack.current); // { answer: 99 }
 });
 
 unsubscribe();
@@ -53,6 +54,12 @@ In a Svelte component, you can reference `first` and `last` as store properties 
 ```svelte
 <button disabled={$stack.first} on:click={() => value = stack.undo()}>Undo</button>
 <button disabled={$stack.last} on:click={() => value = stack.redo()}>Redo</button>
+```
+
+You can also access the current value of the stack, if that's preferable to tracking the value manually:
+
+```svelte
+<h1>The answer is {$stack.current.answer}</h1>
 ```
 
 Don't mutate the objects you push to the undo stack; chaos will result. Instead, create a fresh copy each time, either manually or using something like [Immer](https://immerjs.github.io/immer/).

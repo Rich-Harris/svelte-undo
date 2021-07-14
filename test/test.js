@@ -41,7 +41,7 @@ test('updates first/last state', () => {
 	let first = null;
 	let last = null;
 
-	const unsubscribe = stack.subscribe(state => {
+	const unsubscribe = stack.subscribe((state) => {
 		({ first, last } = state);
 	});
 
@@ -63,6 +63,32 @@ test('updates first/last state', () => {
 	stack.undo();
 	assert.equal(first, true);
 	assert.equal(last, false);
+
+	unsubscribe();
+});
+
+test('updates $stack.current', () => {
+	const stack = createStack({ x: 1 });
+
+	let current = null;
+
+	const unsubscribe = stack.subscribe((state) => {
+		current = state.current;
+	});
+
+	assert.equal(current, { x: 1 });
+
+	stack.push({ x: 2 });
+	assert.equal(current, { x: 2 });
+
+	stack.push({ x: 3 });
+	assert.equal(current, { x: 3 });
+
+	stack.undo();
+	assert.equal(current, { x: 2 });
+
+	stack.undo();
+	assert.equal(current, { x: 1 });
 
 	unsubscribe();
 });
